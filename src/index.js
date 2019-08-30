@@ -7,8 +7,10 @@ class Square extends React.Component {
     return (
       <button
         className="square"
+        // `onClick` prop tells React to set up a click event listener
+        // The function inside will be invoked, when `button` is clicked
         onClick={() => {
-          this.props.onClick({ value: "X" });
+          this.props.onClick();
         }}
       >
         {this.props.value}
@@ -24,6 +26,15 @@ class Board extends React.Component {
       squares: Array(9).fill(null),
     };
   }
+
+  // the data is managed by Board.
+  // when Board's state changes, the Square components re-render automatically
+  handleClick(i) {
+    const squares = this.state.squares.slice();
+    squares[i] = "X";
+    this.setState({ squares: squares });
+  }
+
   renderSquare(i) {
     return <Square value={this.state.squares[i]} onClick={() => this.handleClick(i)} />;
   }
